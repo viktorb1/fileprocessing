@@ -18,14 +18,16 @@ This script is a generalized version of `proj1.py`. You can specify the followin
 
 Again, the script assumes that `proj2.py` is located one level above the `sample-files` folder and the `.json` file names provided are located directly inside the `sample-files` folder
 
-Example command
+Example command:
 
 ```
 proj2.py --json_file rw50-8k.json rw70-8k.json --output_filename save_here.csv --time_str_format '%d/%m/%y %H:%M:%S' -h
 ```
 
 ## find.py
-This script finds all files and directories that match the provided pattern:
+This script finds all files and directories that match the provided pattern.
+
+Example command:
 ```
 python3 find.py --root ./sample-files --name 'rw*'
 ```
