@@ -3,7 +3,7 @@
 ## proj1.py
 This script assumes that the script is located one folder above 'sample-files' folder
 
-Run the script as usuall with:
+Run the script as usual with:
 ```bash
 python3 proj1.py
 ```
