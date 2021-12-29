@@ -1,7 +1,7 @@
 # File Processing Tools
 
 ## proj1.py
-This script assumes that the script is located one folder above 'sample-files' folder
+This script assumes that `proj1.py` is located one folder above 'sample-files' folder
 
 Run the script as usual with:
 ```bash
