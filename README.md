@@ -21,7 +21,7 @@ Again, the script assumes that `proj2.py` is located one level above the `sample
 Example command
 
 ```
-proj2.py --json_file 
+proj2.py --json_file rw50-8k.json rw70-8k.json --output_filename save_here.csv --time_str_format '%d/%m/%y %H:%M:%S' --human-readable
 ```
 
 ## proj3.py
