@@ -34,7 +34,7 @@ python3 find.py --root ./sample-files --name 'rw*'
 
 ## Testing
 
-To run the tests, firs install `pytest` using:
+To run the tests, first install `pytest` using:
 
 ```
 pip install pytest
