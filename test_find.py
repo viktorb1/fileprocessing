@@ -13,7 +13,6 @@ def args():
 
 
 def test_find(args):
-    print(args.name)
     matches = find.find(args)
 
     shouldbe = [['./sample-files/rw'],
