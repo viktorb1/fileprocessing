@@ -28,8 +28,8 @@ def parseArgs():
     return parser.parse_args()
 
 
-def genDB():
-    db = sqlite3.connect("./proj4.db")
+def genDB(name):
+    db = sqlite3.connect(name)
     cur = db.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS todos (task varchar(200), tags varchar(500), dt date, done INTEGER)")
     return db
@@ -62,37 +62,50 @@ def processAdd(db, args):
 
 def processSearch(db, args):
     cur = db.cursor()
+    x = []
 
     if args.today:
         today = str(date.today())
         cur.execute("SELECT * FROM todos WHERE dt = ?;", [today])
-        printMatches(cur.fetchall())
+        x = cur.fetchall()
+        printMatches(x)
     elif args.from_ and args.to:
         fr = args.from_[0]
         to = args.to[0]
         cur.execute("SELECT * FROM todos WHERE dt BETWEEN (?) AND (?);", [fr, to]);
-        printMatches(cur.fetchall(), printDate=False)
+        x = cur.fetchall()
+        printMatches(x, printDate=False)
     elif args.task or args.tag:
         tag = args.tag if args.tag else ""
         cur.execute("SELECT * FROM todos WHERE task LIKE (?) AND tags LIKE (?);", ["%" + ' '.join(args.task) + "%", "%" + tag + "%"])
-        printMatches(cur.fetchall(), printDate=False, printTags=False)
+        x = cur.fetchall()
+        printMatches(x, printDate=False, printTags=False)
 
+    return x
 
 def processDone(db, args):
     cur = db.cursor()
+    x = []
 
     if args.task or args.tag:
         tag = args.tag if args.tag else ""
-        print(tag)
+        matches = cur.execute("SELECT * FROM todos WHERE task LIKE (?) AND tags LIKE (?);", ["%" + ' '.join(args.task) + "%", "%" + tag + "%"]).fetchall()
         cur.execute("UPDATE todos SET done=TRUE WHERE task LIKE (?) AND tags LIKE (?);", ["%" + ' '.join(args.task) + "%", "%" + tag + "%"])
+
+        for match in matches:
+            x.append(match)
+            print("Marked as done: " + match[0] + "  " + "tags:" + match[1] + " date:" + match[2])
+
         db.commit()
     else:
         print("Error: please provide tasks or tags to mark as complete")
+    
+    return x
 
 
 if __name__ == '__main__':
     args = parseArgs()
-    db = genDB()
+    db = genDB("./proj4.db")
 
     if args.command == 'add':
         processAdd(db, args)
